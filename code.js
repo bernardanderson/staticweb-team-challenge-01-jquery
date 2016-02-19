@@ -1,22 +1,96 @@
+// jQuery script which adds a text input and a button to add "div cards" to the DOM.
+//  The "div cards" contain the text from the input and also get two color inputs: one which changes the 
+//  color of the text and the other changes the background color.  A button is also added which deletes 
+//  the "div card" and all its children.  Script is written without any static html form elements, no css file
+//  and no "classes" or "ids".
+
 $(document).ready(function() {
 
-  $("body").add("<input type='text' placeholder='Enter a word'></input>").add("<button>Click to Add</button>").prependTo("body");
+  // This makes a text input, styles the input and adds to the BODY as the first element in the body
+  $( "<input/>", {
+    "type": "text",
+    "placeholder": "Enter a word"
+  }).css({
+    display: "block",
+    "margin-left": "auto",
+    "margin-right": "auto"
+    }).prependTo( "body" );
 
-  $("input").css("display", "block").css("margin-left", "auto").css("margin-right", "auto");
-  $("button").css("display", "block").css("margin-left", "auto").css("margin-right", "auto");
+  // This makes a button styles the button and adds to BODY as the child directly before the script
+  $( "<button/>", {
+    text: "Change Color",
+    click: function() {
+      addDiv();
+      addDivText();
+      addFgColorInput();
+      addBgColorInput();
+      addDeleteButton();
+    }
+  }).css({
+    display: "block",
+    "margin-left": "auto",
+    "margin-right": "auto"
+  }).insertBefore($("script").first());
 
-  $("button").click(function() {
-    $("script").first().before("<div>" + $("input").val() + "</div>");
-    $("div").last().append("<input type='color' class='bg-color'>").last().append("<input type='color' class='text-color'>");
-    $("div").css("display", "inline-block").css("background-color", "blue").css("width", "20%").css("height", "200px").css("margin", "2%");
-    
-    $("div").click(function() {
-      $("div").remove();
-    });
+  // This function adds a div and styles it to the body.  
+  function addDiv() {
+    $( "<div/>").css({
+      display: "inline-block",
+      "text-align": "center",
+      "width": "20%",
+      "background-color": "slategray",
+      "height": "200px",
+      "margin": "2%"
+    }).insertBefore($("script").first());
+  }
 
-    $(".bg-color").click(function() {
-      alert("not closing");
-    });
-  });
+  function addDivText() {
+    $("<p/>", {
+      text: $('input').val()
+    }).css({
+      display: "inline-block",
+      "font-size": "1.5rem",
+      "width": "50%",
+      "margin": "3%"
+    }).appendTo($("div").last());
+  }
 
+  // This function adds a color input which, when added to an element, will change the color of that element
+  function addFgColorInput() {
+    $("<input/>", {
+      "type": "color",
+      change: function() {
+        $(this).parent().css("color", $(this).val());
+      }
+    }).css({
+      display: "block",
+      "width": "25%",
+      "margin-left": "auto",
+      "margin-right": "auto"
+    }).appendTo($("div").last());
+  }
+
+  // This function adds a color input which, when added to an element, will change the background color of that element
+  function addBgColorInput() {
+    $("<input/>", {
+      "type": "color",
+      change: function() {
+        $(this).parent().css("background-color", $(this).val());
+      }
+    }).css({
+      display: "inline-block",
+      "width": "25%",
+      "margin": "3%"
+    }).appendTo($("div").last());
+  }
+
+  // This function adds a button, when added to an element, will delete that element and all its children
+  function addDeleteButton() {
+    $("<button/>", {
+      text: "Delete Div",
+      click: function() {
+        $(this).parent().remove();
+      }
+    }).appendTo($("div").last());
+  }
 });
