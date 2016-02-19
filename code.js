@@ -44,6 +44,7 @@ $(document).ready(function() {
     }).insertBefore($("script").first());
   }
 
+  // This adds text to each div card from the text input on the DOM
   function addDivText() {
     $("<p/>", {
       text: $('input').val()
@@ -64,10 +65,10 @@ $(document).ready(function() {
       }
     }).css({
       display: "block",
-      "width": "25%",
+      "width": "35%",
       "margin-left": "auto",
       "margin-right": "auto"
-    }).appendTo($("div").last());
+    }).add("<label>FgColor</label>").appendTo($("div").last());
   }
 
   // This function adds a color input which, when added to an element, will change the background color of that element
@@ -78,10 +79,11 @@ $(document).ready(function() {
         $(this).parent().css("background-color", $(this).val());
       }
     }).css({
-      display: "inline-block",
-      "width": "25%",
-      "margin": "3%"
-    }).appendTo($("div").last());
+      display: "block",
+      "width": "35%",
+      "margin-left": "auto",
+      "margin-right": "auto"
+    }).add("<label>BgColor</label>").appendTo($("div").last());
   }
 
   // This function adds a button, when added to an element, will delete that element and all its children
@@ -91,6 +93,11 @@ $(document).ready(function() {
       click: function() {
         $(this).parent().remove();
       }
+    }).css({
+      display: "block",
+      "width": "35%",
+      "margin-left": "auto",
+      "margin-right": "auto"
     }).appendTo($("div").last());
   }
 });
